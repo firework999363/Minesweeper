@@ -1,9 +1,11 @@
 
 
 import de.bezier.guido.*;
-//Declare and initialize NUM_ROWS and NUM_COLS = 20
+//Declare and initialize NUM_ROWS and NUM_COLS = 20github
+int NUM_COLS = 20;
+int NUM_ROWS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
-private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
+private ArrayList <MSButton> bombs = new ArrayList<MSButton>(); //ArrayList of just the minesweeper buttons that are mined
 
 void setup ()
 {
@@ -12,16 +14,44 @@ void setup ()
     
     // make the manager
     Interactive.make( this );
-    
     //your code to declare and initialize buttons goes here
+    buttons= new MSButton[20][20];
+    for(int l = 0; l<20; l++)
+    {
+        for(int k= 0; k<20; k++)
+        {
+            buttons[l][k] = new MSButton(l,k);
+        }
+    }
     
-    
-    
-    setBombs();
+    setBombs(10);
 }
-public void setBombs()
+public void setBombs(int boom)
 {
-    //your code
+    int r1 = (int)Math.random()*20;
+    int c1 = (int)Math.random()*20;
+    /*if (boom == 0)
+    {}
+    else
+    {
+        if (bombs.contains(buttons[r1][c1])) 
+        {
+            setBombs(boom);
+        } 
+        else
+        {
+            bombs.add(buttons[r1][c1]);
+            setBombs(boom-1);
+        }
+    }*/
+    for(int i = 0; i <= boom; i++) {
+        if(bombs.contains(buttons[r1][c1])) {
+            i--;
+        }
+        else {
+            bombs.add(buttons[r1][c1]);
+        }
+    }
 }
 
 public void draw ()
@@ -53,8 +83,8 @@ public class MSButton
     
     public MSButton ( int rr, int cc )
     {
-        // width = 400/NUM_COLS;
-        // height = 400/NUM_ROWS;
+        width = 400/NUM_COLS;
+        height = 400/NUM_ROWS;
         r = rr;
         c = cc; 
         x = c*width;
@@ -83,8 +113,8 @@ public class MSButton
     {    
         if (marked)
             fill(0);
-        // else if( clicked && bombs.contains(this) ) 
-        //     fill(255,0,0);
+         else if( clicked && bombs.contains(this) ) 
+             fill(255,0,0);
         else if(clicked)
             fill( 200 );
         else 
